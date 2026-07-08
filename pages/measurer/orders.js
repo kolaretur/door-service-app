@@ -88,46 +88,52 @@ export default function MeasurerOrders() {
         </p>
       ) : (
         orders.map((order) => (
-          <div
+          <a
             key={order.id}
-            style={{
-              border: '2px solid #e1e8ef',
-              borderRadius: '12px',
-              padding: '15px',
-              marginBottom: '12px',
-              backgroundColor: 'white',
-            }}
+            href={`/measurer/order-detail?id=${order.id}`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <div>
-                <div style={{ fontWeight: '600', fontSize: '16px', marginBottom: '4px' }}>
-                  {order.address}
-                </div>
-                <div style={{ fontSize: '14px', color: '#7f8c8d', marginBottom: '4px' }}>
-                  {order.opening_height && `Проём: ${order.opening_height}×${order.opening_width}×${order.opening_depth} мм`}
-                  {!order.opening_height && 'Размеры не указаны'}
-                </div>
-                {order.planned_amount && (
-                  <div style={{ fontWeight: '600', color: '#2c3e50' }}>
-                    {order.planned_amount.toLocaleString()} ₽
+            <div
+              style={{
+                border: '2px solid #e1e8ef',
+                borderRadius: '12px',
+                padding: '15px',
+                marginBottom: '12px',
+                backgroundColor: 'white',
+                cursor: 'pointer',
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <div>
+                  <div style={{ fontWeight: '600', fontSize: '16px', marginBottom: '4px' }}>
+                    {order.address}
                   </div>
-                )}
+                  <div style={{ fontSize: '14px', color: '#7f8c8d', marginBottom: '4px' }}>
+                    {order.opening_height && `Проём: ${order.opening_height}×${order.opening_width}×${order.opening_depth} мм`}
+                    {!order.opening_height && 'Размеры не указаны'}
+                  </div>
+                  {order.planned_amount && (
+                    <div style={{ fontWeight: '600', color: '#2c3e50' }}>
+                      {order.planned_amount.toLocaleString()} ₽
+                    </div>
+                  )}
+                </div>
+                <div style={{
+                  padding: '4px 12px',
+                  borderRadius: '20px',
+                  backgroundColor: statusColors[order.status] || '#95a5a6',
+                  color: 'white',
+                  fontSize: '13px',
+                  fontWeight: '500',
+                }}>
+                  {statusLabels[order.status] || order.status}
+                </div>
               </div>
-              <div style={{
-                padding: '4px 12px',
-                borderRadius: '20px',
-                backgroundColor: statusColors[order.status] || '#95a5a6',
-                color: 'white',
-                fontSize: '13px',
-                fontWeight: '500',
-              }}>
-                {statusLabels[order.status] || order.status}
+              <div style={{ fontSize: '12px', color: '#bdc3c7', marginTop: '8px' }}>
+                {new Date(order.created_at).toLocaleString('ru-RU')}
               </div>
             </div>
-            <div style={{ fontSize: '12px', color: '#bdc3c7', marginTop: '8px' }}>
-              {new Date(order.created_at).toLocaleString('ru-RU')}
-            </div>
-          </div>
+          </a>
         ))
       )}
 
